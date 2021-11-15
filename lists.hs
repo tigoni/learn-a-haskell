@@ -24,29 +24,36 @@ appendList = mylist ++ [[3,4]]
 anotherlist = [8]:appendList
 target = anotherlist !! 2
 
-
+-- get element in 2d array
 anotherList = [[4,6,7],[20,10,30],[3,7,11]]
-target = anotherList !! 1 !! 2 -- target is 30
+elementNeeded = anotherList !! 1 !! 2 -- target is 30
 
 --lists are compared in lexicological order
 p = [2,5,7] > [1,9,5] --True
 d = [1,8,7] > [1,9,5] --False
 u = [9,5,7] > [9,5,5] --True
 
-let items = [10,20,20,40,50]
-head items -- 10
-tail items -- removes the list's head. returns [20,20,40,50]
-init items -- removes the list's tail (last element) 
-length items -- number of items in the list
-null items -- checks if list is empty
-reverse items -- reverses the list
-take 2 items --extracts the specified number of items from the list --returns [10,20]
-drop 3 items --removes the number of items on the list specified
-maximum items --return the largest item in the list -- 50
-minimum items --return the smallest item in the list -- 50
-sum items -- total sum of items in the list
-product items -- product of items in the list
-10 `elem` items -- detemines if 10 is in the list and returns True/False
+items = [10,20,20,40,50]
+firstElem = head items -- 10
+listTail = tail items -- removes the list's head. returns [20,20,40,50]
+listHead = init items -- removes the list's tail (last element) 
+itemsCount = length items -- number of items in the list
+isEmpty = null items -- checks if list is empty
+reversed = reverse items -- reverses the list
+duo = take 2 items --extracts the specified number of items from the list --returns [10,20]
+removed = drop 3 items --removes the number of items on the list specified
+max = maximum items --return the largest item in the list -- 50
+min = minimum items --return the smallest item in the list -- 50
+summed = sum items -- total sum of items in the list
+prod = product items -- product of items in the list
+isTen = 10 `elem` items -- detemines if 10 is in the list and returns True/False
 
 
+--list comprehensions
+-- double each item in the list of 1-10
+doubledItemsInListOfTen = [x*2 | x <- [1..10]]
 
+ --bind every item in list to x and double it, use a predicate to filter only doubles greater or equal to 12
+ --output: [12,14,16,18,20]
+doubledItemsInListOfTenGreaterThanOrEqualToTwelve = [x*2 | x <- [1..10], x*2 >=12 ]
+ 

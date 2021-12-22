@@ -1,10 +1,10 @@
-{-# LANGUAGE BlockArguments #-}
-import System.Directory.Internal.Prelude (RealFloat)
---pattern matching functions
+module StartingFuncSyntax where
+
+--pattern matching functions: This is a way of defining multiple function bodies to work on data that matches specific patterns.  It can be used on any data type.
+-- patterns check if the input has a particular form. 
 
 --When sayMe is called, pattern matching will be used to determine the correct function to be called.
---In this case, calling sayMe with a 1-5 will output a string of the same integral. Anything else will be 
---mapped to x and the string 'Not a number' will be printed.
+--In this case, calling sayMe with a 1-5 will output a string of the same integral. Anything else will be mapped to x and the string 'Not a number' will be printed.
 sayMe :: (Integral a ) => a -> String
 sayMe 1 = "One"
 sayMe 2 = "Two"
@@ -19,9 +19,16 @@ factorial :: (Integral a ) => a -> a
 factorial 0 = 1
 factorial n = n * factorial (n - 1)
 
+--redefine the head function using pattern matching
+head' :: [a] -> a
+head' [] = error "Cannot get head of empty list"
+head' (x:_) = x 
+
+
 --length function
 len [] = 0
 len (x:t) = 1 + len t
+
 
 --use case for pattern matching
 len2 list = 
@@ -69,7 +76,7 @@ capital :: String -> String
 capital "" = "Empty string, Not allowed" 
 capital all@(x:xs) = "The first letter of " ++ all ++ " is " ++ [x]
 
---guards: Tests whether some property of a value (or several of them) are true or false
+--guards: Tests whether some property of a value (or several of them) are true or false. Guards test the boolean conditions of input. Guards basically replace if-then-else statements which also evaluate based on boolean conditions.
 
 bestCapSize :: (RealFloat a) => a -> String 
 bestCapSize size
@@ -92,6 +99,8 @@ coinCirculation marketCap price
 max' :: (Ord a) => a -> a -> a
 max' a b | a > b = a 
          | otherwise = b
+
+
 
 --using where bindings to avoid repaeting the guard conditions
 
@@ -117,7 +126,7 @@ coinCirculation'' marketCap price
         high = 800
 
 --Let it be: similar to where bindings. However they can be used to bind to variables anywhere and are expressions themselves. They do not span accross guard conditions.
-
+--Let it be bindings let us bind variables anywhere and are expressions themselves. Theay are local annd do not span accross guards
 -- function to get the surface area of a cylinder given its height and radius
 cylinder :: (RealFloat a) => a -> a -> a 
 cylinder r h = 

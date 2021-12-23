@@ -1,6 +1,5 @@
-{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
-import Distribution.Simple.Utils (xargs)
-import Distribution.Types.GenericPackageDescription.Lens (_Impl)
+module StartRecursion where
+
 -- Get the biggest in a list of things that can be ordered
 maximum' :: (Ord a ) => [a] -> a
 maximum' [] = error "maximum of empty list"

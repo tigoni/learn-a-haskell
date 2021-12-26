@@ -1,4 +1,5 @@
---Officially Haskell functions take just one paramter. Any extra parameters supplied to a function
+module StartWithHigherOrderFunctions where 
+{- Officially Haskell functions take just one paramter. Any extra parameters supplied to a function
 -- makes it curried function.Currying breaks down a function that takes multiple parameters into a 
 -- series of functions that take one parameter each and return the another function of a single argument
 -- for the final function, the actual result is returned.
@@ -8,11 +9,72 @@
 -- higher order functions.
 
 -- Currying is translating a function from callable as f(a, b, c) into callable as f(a)(b)(c).
+-}
 
 multThree :: (Num a) => a -> a -> a -> a
--- multThree :: (Num a) => a -> (a -> (a -> a)) -- function type can also be written this way since the function
--- is curried by Haskell
+-- multThree :: (Num a) => a -> (a -> (a -> a)) -- function type can also be written this way since the functioni is curried by Haskell
 multThree x y z = x * y * z
 
 multTwoWithNine = multThree 9
 
+
+-- examples of HOCs from Youtube Video:
+-- https://www.youtube.com/watch?v=ccExc6rrUN8
+-- Function 'doIt' takes two params: a function and a value 
+-- It applies the function to the value
+
+--define function to pass to 'doIt' as a value
+add1 :: Int -> Int
+add1 x = x + 1
+
+doIt :: (a -> b) -> a -> b
+doIt add1 y = add1 y  
+res = doIt add1 3 
+-- call 'doIt' with function as an argument
+--outputs 4 
+
+
+
+--the function argument can be an anonymous function
+-- prints 8
+x = doIt (\x -> x * 2 ) 4 
+
+
+--Some Haskell higher order functions
+-- Map: takes a function and a list and applies the function to that list to produce another list
+
+-- [13,8,5,9,10]
+withFiveAddedList = map (\x -> x + 5) [8,3,1,4,5] 
+
+--Filter: takes a function (a predicate since it alwys retuns a Bool) and a list and returns a list initialized based on the results of the predicate
+numbersGreaterThanTwo = filter (\x -> x > 2) [9,4,1,4,0] -- filter all numbers greater than 2 [9,4,4] 
+
+-- Partial Function Application and Currying
+
+--func :: a -> b -> c -> d
+
+{- can be re-written as a curried function. Actually functions that take multiple arguments  do not exist in Haskell but rather functions take a single argument that returns another function or an end result.
+-}
+-- func :: a -> (b -> (c -> d))
+
+-- Using currying to define function add
+-- All 3 definitions are equivalent
+add :: Int -> Int -> Int 
+
+add x y = x + y
+
+--add x = (\y -> x + y)
+
+--add = (\x -> (\y -> x + y))
+
+
+{- Function Function Application
+ Since funtions in Haskell work with single arguments, passing a function less arguments that it expects will simply cause the function to return another function needing as many arguments as had been left out. This is call paartial function application and it allows us to create functions on the fly and pass them to others and also seed them with some data
+-}
+
+--min :: (Ord a ) => a -> a -> a
+-- min  :: (Ord a ) => a -> (a -> a -> a) 
+-- Returns end result
+leastNumber = min 4 5 
+-- returns a function expecting a single argument (the 4 passed here will be hardcoded arleady)
+funcX = min 4 

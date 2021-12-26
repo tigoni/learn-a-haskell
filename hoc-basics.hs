@@ -78,3 +78,23 @@ add x y = x + y
 leastNumber = min 4 5 
 -- returns a function expecting a single argument (the 4 passed here will be hardcoded arleady)
 funcX = min 4 
+
+--Partial application of infix functions
+divideByTen :: (Floating a) => a -> a 
+divideByTen = (/10)
+
+
+-- Function as param. applyTwice takes a function as a param  and applies it twice to the second param  
+applyTwice :: (a -> a) -> a -> a
+applyTwice funcParam x = funcParam (funcParam x)
+
+concatText = applyTwice ("Boom " ++ ) "Bang"
+results = applyTwice (+3) 5
+myList = applyTwice (3:)[1]
+
+
+--Implementing zipWith: Takes a function and two lists and applies that function to the corresponding list elements
+zipWith' :: (a -> b -> c) -> [a] -> [b] -> [c]
+zipWith' _ [] _ = []
+zipWith' _ _ [] = []
+zipWith f (x : xs ) (y : ys) = f x y : zipWith' f xs ys

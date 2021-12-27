@@ -97,4 +97,23 @@ myList = applyTwice (3:)[1]
 zipWith' :: (a -> b -> c) -> [a] -> [b] -> [c]
 zipWith' _ [] _ = []
 zipWith' _ _ [] = []
-zipWith f (x : xs ) (y : ys) = f x y : zipWith' f xs ys
+zipWith' f (x : xs ) (y : ys) = f x y : zipWith' f xs ys
+
+-- Using zipWith' 
+combined = zipWith' (+) [1,2,3] [4,5,6]
+--get the max elements in two lists
+maxInLists = zipWith' max [2,4,6] [1,3,7]
+
+actors = zipWith' (++) ["Denzel", "Al", "Samuel"] [" Washington", " Pacino ", " L. Jackson"]
+
+-- Function that takes a functions and returns a function with params flipped
+flip' :: (a -> b -> c ) -> (b -> a -> c)
+flip' f = g
+     where g x y = f y x
+
+--Implementing map: takes a function and applies it to every item in a list
+map' :: (a -> b) -> [a] -> [b]
+map' _ [] = []
+map' func (x:xs) = func x : map' func xs
+
+doubledNumbers = map' (*2) [1,2,3,4,5]

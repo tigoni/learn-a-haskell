@@ -161,3 +161,19 @@ summedUpTurples = map(\(a,b) -> a + b ) [(1,2),(3,5),(6,3),(2,6)]
 --Lambdas can take any number of parameters
 fancyCalculation = zipWith (\a b -> (a * 30 + 3) / b) [5,4,3,2,1] [1,2,3,4,5]
 
+-- Folds: functions that reduce a list to a single value
+-- takes a binary function, a starting value and a list to fold up. The binary function takes two parameters. (thr starting value (accumulator) and the first (or last) element of the list and produces a new  accumulator value). This function is called with the new  accumulator and list element until the the accumulator remains.
+
+-- foldl: folds up a list from the left
+-- fold functions can replace recursion in lists
+summ :: (Num a) => [a] -> a
+summ xs = foldl (\accum x -> accum + x) 0 xs
+
+--since functions are curried the above implementation can be re-written as:
+summ' :: (Num a) => [a] -> a
+summ' = foldl (+) 0
+
+
+-- Implementing elem using foldl
+elem' :: (Eq a) => a -> [a] -> Bool
+elem' y ys =  foldl (\acc x -> if x == y then True else acc) False ys

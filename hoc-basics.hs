@@ -136,12 +136,12 @@ evenNumbersList = filter' even [1..10]
 
 lowerCased = filter' (`elem` ['a'..'z']) "Today Is A Day In December"
 
-notNull x = not (null x) in filter' notNull [[1,2,4],[],[3],[6,8]] 
+listsNotEmpty = let notNull x = not (null x) in filter' notNull [[1,2,4],[],[3],[6,8]] 
 
 
 -- Implementing quicksort using filter 
-quicksort' :: (Ord a ) => [a] - [a]
-quicksort' _ [] = []
+quicksort' :: (Ord a ) => [a] -> [a]
+quicksort' [] = []
 quicksort' (x:xs) = 
     let smallerSorted = quicksort' (filter (<=x) xs)
         biggerSorted = quicksort' (filter (>x) xs)

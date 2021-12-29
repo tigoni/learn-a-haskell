@@ -117,3 +117,32 @@ map' _ [] = []
 map' func (x:xs) = func x : map' func xs
 
 doubledNumbers = map' (*2) [1,2,3,4,5]
+squared = map' (map' (^2)) [[1,2],[2,3]]
+
+-- Filter: function that takes a predicatei (a function that determined if something is true or false and returns a boolean value) and and a list and returns a list that satisfies the predicate
+
+filter' :: (a -> Bool) -> [a] -> [a]
+filter' _ [] = []
+filter' f (x:xs)
+   | f x = x : filter' f xs 
+   | otherwise = filter' f xs
+
+-- Using the filter' function
+greaterThanThree = filter' (>3) [1,3,8,5,1,2,4,6]
+
+equalToThree = filter' (==3) [1,2,3,4,5]
+
+evenNumbersList = filter' even [1..10]
+
+lowerCased = filter' (`elem` ['a'..'z']) "Today Is A Day In December"
+
+notNull x = not (null x) in filter' notNull [[1,2,4],[],[3],[6,8]] 
+
+
+-- Implementing quicksort using filter 
+quicksort' :: (Ord a ) => [a] - [a]
+quicksort' _ [] = []
+quicksort' (x:xs) = 
+    let smallerSorted = quicksort' (filter (<=x) xs)
+        biggerSorted = quicksort' (filter (>x) xs)
+    in smallerSorted ++ [x] ++ biggerSorted   

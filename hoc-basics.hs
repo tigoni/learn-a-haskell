@@ -146,3 +146,18 @@ quicksort' (x:xs) =
     let smallerSorted = quicksort' (filter (<=x) xs)
         biggerSorted = quicksort' (filter (>x) xs)
     in smallerSorted ++ [x] ++ biggerSorted   
+
+-- Get the largest number under 100,000 divisible by 3829
+largestDivisible :: (Integral a) => a
+largestDivisible = head (filter p [100000,99999..])
+    where p x = x `mod` 3829 == 0
+
+-- Lambdas
+-- Anonymous functions used where the function is needed only once. Usually needed for passing to a higher order function. 
+
+-- Using a lambda to add elements in a list of turples and return list
+summedUpTurples = map(\(a,b) -> a + b ) [(1,2),(3,5),(6,3),(2,6)]
+
+--Lambdas can take any number of parameters
+fancyCalculation = zipWith (\a b -> (a * 30 + 3) / b) [5,4,3,2,1] [1,2,3,4,5]
+

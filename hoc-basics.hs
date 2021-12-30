@@ -161,11 +161,10 @@ summedUpTurples = map(\(a,b) -> a + b ) [(1,2),(3,5),(6,3),(2,6)]
 --Lambdas can take any number of parameters
 fancyCalculation = zipWith (\a b -> (a * 30 + 3) / b) [5,4,3,2,1] [1,2,3,4,5]
 
--- Folds: functions that reduce a list to a single value
--- takes a binary function, a starting value and a list to fold up. The binary function takes two parameters. (thr starting value (accumulator) and the first (or last) element of the list and produces a new  accumulator value). This function is called with the new  accumulator and list element until the the accumulator remains.
+-- Folds:  Utility functions introduced as a way of handling the common pattern of recursing through lists with pattern matching. A fold function takes a binary function, a starting value and a list to fold up. The binary function takes two parameters. (thr starting value (accumulator) and the first (or last) element of the list and produces a new  accumulator value). This function is called with the new  accumulator and list element until the the accumulator remains.
+--}
 
 -- foldl: folds up a list from the left
--- fold functions can replace recursion in lists
 summ :: (Num a) => [a] -> a
 summ xs = foldl (\accum x -> accum + x) 0 xs
 
@@ -177,3 +176,13 @@ summ' = foldl (+) 0
 -- Implementing elem using foldl
 elem' :: (Eq a) => a -> [a] -> Bool
 elem' y ys =  foldl (\acc x -> if x == y then True else acc) False ys
+
+-- foldr: reduces a list from the right. The binary function parameters should be in the order: current value and then
+-- accumulator which is opposite to foldl
+--Implementing a mapping function using foldr
+doOperationToAGivenList :: (a -> b) -> [a] -> [b]
+doOperationToAGivenList f xs = foldr(\x acc -> f x : acc) [] xs
+
+-- Folds can be used where a list is traversed at least once and something is being returned based on that.
+-- foldl1 and foldr1 are similar but do not need to be provided with a start value. They assume the first/last element
+-- the list to be the stating value and starts the fold with the element next to it.

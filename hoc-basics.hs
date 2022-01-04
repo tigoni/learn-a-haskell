@@ -186,3 +186,19 @@ doOperationToAGivenList f xs = foldr(\x acc -> f x : acc) [] xs
 -- Folds can be used where a list is traversed at least once and something is being returned based on that.
 -- foldl1 and foldr1 are similar but do not need to be provided with a start value. They assume the first/last element
 -- the list to be the stating value and starts the fold with the element next to it.
+--
+
+
+-- Function composition: Two functions both working on the parameter x (f x)(g x) can be re-written as f (g(x))
+-- Function composition can be used to replace lambdas for more clear code
+
+map (\x -> negate (abs x)) [5, -3, -6, 7]
+--can be rewritten as :
+
+map (negate . abs ) [5, -3, -6, 7]
+
+-- Another ex of composition
+abs (negate (sum (tail [1..5])))
+
+-- can be re-written as
+(abs . negate . sum . tail) [1..5] 

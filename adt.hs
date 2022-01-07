@@ -56,5 +56,38 @@ getAge (Person _ a) = a
 getAge (Person2 _ a _) = a
 
 
+-- the data keyword creates a new data type and specifies all the values it can possibly be.-- This is also called a sum type since the values of the type are summed togetther to make the whole type
+--
+-- data for animal can be any of the values specified and nothing else. These are valled value constructors
+data Animal = Giraffe
+            | Elephant
+            | Tiger
+            | Flea
+
+type Zoo = [Animal]
+
+localZoo :: Zoo
+
+localZoo = [Elephant
+            , Tiger
+            , Tiger
+            , Giraffe
+            , Elephant
+            ]
+
+adviceOnFood :: Animal -> String
+adviceOnFood animal = 
+    case animal of
+         Giraffe -> "Acacia branches"
+         Tiger -> "Beef"
+         Elephant -> "A lot of bushes"
+
+adviceOnFeedAll :: Zoo -> [String]
+adviceOnFeedAll [] = []
+adviceOnFeedAll (x:xs) = adviceOnFood x : adviceOnFeedAll xs
+
+
+
+
 
 

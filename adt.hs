@@ -87,7 +87,23 @@ adviceOnFeedAll [] = []
 adviceOnFeedAll (x:xs) = adviceOnFood x : adviceOnFeedAll xs
 
 
+--value constructors can take value params to produce new values
+data Shape = Circle Float Float Float 
+           | Rectangle Float Float Float Float
+     deriving Show
 
+--type constructors can take types as parameters to produce new types
+data Maybe a = Nothing | Just a
+
+
+data Person' = Person' { firstName :: String
+                       , lastName :: String
+                       , age :: Int
+                     } 
+                     deriving (Eq, Show, Read)
+
+getAge' :: Person' -> Int
+getAge' (Person' _ _ a ) = a
 
 
 

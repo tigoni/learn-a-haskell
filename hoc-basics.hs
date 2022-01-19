@@ -1,14 +1,12 @@
 module StartWithHigherOrderFunctions where 
-{- Officially Haskell functions take just one paramter. Any extra parameters supplied to a function
--- makes it curried function.Currying breaks down a function that takes multiple parameters into a 
--- series of functions that take one parameter each and return the another function of a single argument
--- for the final function, the actual result is returned.
 
---Currying is a function of many arguments which is rewritten such that it takes the first argument and returns
--- a function which in turn uses the remaining arguments and returns the value. This kind of functions are called
--- higher order functions.
+{- 
 
--- Currying is translating a function from callable as f(a, b, c) into callable as f(a)(b)(c).
+Officially Haskell functions take just one paramter. Any extra parameters supplied to a function makes it curried function.Currying breaks down a function that takes multiple parameters into a series of functions that take one parameter each and return the another function of a single argument for the final function, the actual result is returned.
+
+Currying is a function of many arguments which is rewritten such that it takes the first argument and returns a function which in turn uses the remaining arguments and returns the value. This kind of functions are called  higher order functions.
+
+Currying is translating a function from callable as f(a, b, c) into callable as f(a)(b)(c).
 -}
 
 multThree :: (Num a) => a -> a -> a -> a
@@ -183,22 +181,17 @@ elem' y ys =  foldl (\acc x -> if x == y then True else acc) False ys
 doOperationToAGivenList :: (a -> b) -> [a] -> [b]
 doOperationToAGivenList f xs = foldr(\x acc -> f x : acc) [] xs
 
--- Folds can be used where a list is traversed at least once and something is being returned based on that.
--- foldl1 and foldr1 are similar but do not need to be provided with a start value. They assume the first/last element
--- the list to be the stating value and starts the fold with the element next to it.
---
+-- Folds can be used where a list is traversed at least once and something is being returned based on that. foldl1 and foldr1 are similar but do not need to be provided with a start value. They assume the first/last element. The list to be the stating value and starts the fold with the element next to it.
 
+-- Function composition: Two functions f and g both working on the parameter x: (f x)(g x) can be re-written as f (g(x)). Function composition can be used to replace lambdas for more clear code
 
--- Function composition: Two functions both working on the parameter x (f x)(g x) can be re-written as f (g(x))
--- Function composition can be used to replace lambdas for more clear code
-
-map (\x -> negate (abs x)) [5, -3, -6, 7]
+let a = map (\x -> negate (abs x)) [5, -3, -6, 7]
 --can be rewritten as :
 
-map (negate . abs ) [5, -3, -6, 7]
+--let b = map negate . abs [5, -3, -6, 7]
 
 -- Another ex of composition
-abs (negate (sum (tail [1..5])))
+let c = abs (negate (sum (tail [1..5])))
 
 -- can be re-written as
-(abs . negate . sum . tail) [1..5] 
+let d = (abs . negate . sum . tail) [1..5] 

@@ -50,3 +50,47 @@ baseRect :: Float -> Float -> Shape'
 baseRect width height = Rectangle' (Point 0 0) (Point width height)
 
 newShapeLocation = move (baseRect 30 70) 100 200
+
+
+
+
+
+-- Record Syntax: a way of reducing effort in accessing data fields from a custom data type
+-- Example: Create a data type Person that has the fields: firstname, lastname, age, height, and phonenumber.
+data Person = Person String String Int Float String deriving (Show)
+
+-- To access the fields of this data type, one would need to write functions for each field as follows:
+person_firstname :: Person -> String
+person_firstname (Person firstname _ _ _ _ ) = firstname
+
+person_age :: Person -> Int
+person_age (Person _ _ age _ _ ) = age
+
+-- For all fields, this would be cumbersome. Haskell solves this using record syntax.
+
+data Person' = Person' { firstname :: String
+                       , lastname :: String
+                       , age :: Int
+                       , height :: Float
+                       , phonenumber :: String
+                       } deriving (Show)
+-- This way, Haskell makes functions that look up the fields. So that functions: firrstname, lastrname, age, height and phonenumber now exist
+ p = Person' "Jane" "Mwas" 34 53.23 "+254756333220"
+fname = firstname p 
+lname = lastname p
+
+-- record syntax also changes how the string representation of the data type is displayedG
+-- with first datatype:
+ p2 = Person "Jose" "Proe" 78 62.45 "+254782999332"
+--Person "Jose" "Proe" 78 62.45 "+254782999332"
+
+--with record syntax
+p = Person' {firstname="Jane", lastname="Mwas", age=34, height=53.23, phonenumber="+254756333220"}
+-- Person' {firstname = "Jane", lastname = "Mwas", age = 34, height = 53.23, phonenumber = "+254756333220"}
+
+-- although we can still create a person in the more common method. The string representation remains the same.
+p = Person' "Jane" "Mwas" 34 53.23 "+254756333220"
+
+
+--Type parameters
+

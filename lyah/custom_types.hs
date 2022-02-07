@@ -75,22 +75,30 @@ data Person' = Person' { firstname :: String
                        , phonenumber :: String
                        } deriving (Show)
 -- This way, Haskell makes functions that look up the fields. So that functions: firrstname, lastrname, age, height and phonenumber now exist
- p = Person' "Jane" "Mwas" 34 53.23 "+254756333220"
+p = Person' "Jane" "Mwas" 34 53.23 "+254756333220"
 fname = firstname p 
 lname = lastname p
 
 -- record syntax also changes how the string representation of the data type is displayedG
 -- with first datatype:
- p2 = Person "Jose" "Proe" 78 62.45 "+254782999332"
+p2 = Person "Jose" "Proe" 78 62.45 "+254782999332"
 --Person "Jose" "Proe" 78 62.45 "+254782999332"
 
 --with record syntax
-p = Person' {firstname="Jane", lastname="Mwas", age=34, height=53.23, phonenumber="+254756333220"}
+p3 = Person' {firstname="Jane", lastname="Mwas", age=34, height=53.23, phonenumber="+254756333220"}
 -- Person' {firstname = "Jane", lastname = "Mwas", age = 34, height = 53.23, phonenumber = "+254756333220"}
 
 -- although we can still create a person in the more common method. The string representation remains the same.
-p = Person' "Jane" "Mwas" 34 53.23 "+254756333220"
+p4444 = Person' "Jane" "Mwas" 34 53.23 "+254756333220"
 
 
 --Type parameters
+--data Maybe a = Nothing | Just a
 
+-- A type constructor can take up types as parameters to produce new types. In the above example, a is a type parameter. The type Maybe when used will end up holding either a Nothing value or a Maybe Int, Maybe Char, Maybe String etc
+
+--x = Just 'T'
+-- :t x is x :: Maybe Char
+
+safeDiv :: (Integral a) => a -> a -> Maybe a
+safeDiv a b = if b == 0 then Nothing else Just $ div a b 

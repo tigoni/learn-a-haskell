@@ -102,3 +102,27 @@ p4444 = Person' "Jane" "Mwas" 34 53.23 "+254756333220"
 
 safeDiv :: (Integral a) => a -> a -> Maybe a
 safeDiv a b = if b == 0 then Nothing else Just $ div a b 
+
+-- Box is an abstract container that can hold any other type
+data Box a = Box a deriving Show 
+
+--Derived Instances: Haskell can make a type an instance of a typeclass by encountering the use of a 'deriving' keyword. The behavior of the type changes based on the typeclass that has been used. 
+
+data Book = Book { title :: String, author :: String, year :: String, price :: Double } deriving (Eq, Read, Show)
+
+--instances of book can be compared using the '==' and '/=' functions. Haskell will compare each of instance the fields in the instances to see if they are equal.
+--the types of fields used also have to be part of the Eq typeclass
+
+book1 = Book {title="Guns And Germs", author="J. Diamond", year="1997", price=1500.00}
+book2 = Book {title="Code Complete", author="R. Marting", year="2006", price=3200.00}
+
+sameBook=book1 == book2
+notSameBook = book1 /= book2
+
+-- With Book type now in Eq, it can be used as the 'a' in a functions that have a class constraint of Eq a in their type signature.
+library = [book1, book2]
+isInLib = book1 `elem` library
+
+-- read is used to allow an instance to be read as a string and returned as its type
+newBook = read "Book { title=\"Atomic Habits\",author=\"James Clear\",year=\"2016\", price=1800.00" :: Book
+

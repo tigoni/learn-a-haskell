@@ -26,8 +26,38 @@ anotherDict :: AssocList Int String
 anotherDict = [(1,"KCR-324R"),(2,"KDV-389P")] 
 
 --define a function that get a value from an association list using a key
+-- by using the assoclist, search can work with any given concrete type used for the list
 search :: (Eq k) => k -> AssocList k v -> Maybe v
 search  key items = lookup key items
 
 result = search 1 anotherDict
 result2 = search 5 anotherDict
+
+--Recursive data types
+-- A data constructor can have fields that are of the same type therefore creating recursive data types.
+-- A list [3] is syntactic sugar for 5:[]. List [4,5,6] is also 4:(5:(6:[])). It shows a list can be an element joined to 
+-- another list which can be empty or another list.
+data List a = Empty | Cons a (List a) deriving (Show, Read, Eq, Ord)
+
+--Cons is a constructor that is just another word for ':'.
+-- In lists ':' is a constructor that takes a value and another list and returns a list.
+-- Functions can be made to be automaticaly infix by composing them of special characters 
+
+infixr 5 :-:
+data List' a = Empty' | a :-: (List' a) deriving (Show, Read, Eq, Ord)
+
+--First a fixity declaration is made (infixr 5 :-:) This states how tightly the operator binds and whether its left or right associative.
+
+-- let x = 4 :-: 2 :-: Empty'
+-- 4 :-: (2 :-: Empty')
+
+--defining a new function to add the list
+infixr 5 .++
+(.++) :: List' a -> List' a -> List' a 
+Empty' .++ ys = ys
+(x :-: xs) .++ ys = x :-: (xs .++ ys)
+
+a = 5 :-: 3 :-: 8 :-: Empty'
+b = 0 :-: 9 :-: Empty'
+results = a .++ b
+-- 5 :-: (3 :-: (8 :-: (0 :-: (9 :-: Empty'))))

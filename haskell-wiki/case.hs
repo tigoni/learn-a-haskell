@@ -12,3 +12,9 @@ whichCase ch =
 option = First "My selection"
 result = whichCase option 
  
+-- guards can replace the above statements
+whichCase' args 
+           | First _ = "first one?"
+           | Second _ = "second one?"
+           | otherwise = "no idea what's your selection"
+

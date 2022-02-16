@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 --type synonyms: same as adding alias to a type for easier readability and documentation
 type String' = [Char]
 
@@ -61,3 +62,28 @@ a = 5 :-: 3 :-: 8 :-: Empty'
 b = 0 :-: 9 :-: Empty'
 results = a .++ b
 -- 5 :-: (3 :-: (8 :-: (0 :-: (9 :-: Empty'))))
+
+
+-- Implementing a binary search tree
+data Tree a = EmptyTree | Node a (Tree a) (Tree a) deriving (Show, Read, Eq)
+
+--utility function just to make a singleton tree
+singleton :: a -> Tree a
+singleton x = Node x EmptyTree EmptyTree
+
+-- function to insert a value into a given tree
+treeInsert :: (Ord a ) => a -> Tree a -> Tree a 
+treeInsert x EmptyTree = singleton  x
+treeInsert x (Node a left right)
+ | x == a = Node x left right
+ | x < a = Node a (treeInsert x left) right
+ | x > a = Node a left (treeInsert x right)
+
+
+--search the tree for a value
+treeElem :: (Ord a ) => a -> Tree a -> Bool 
+treeElem x EmptyTree = False 
+treeElem x (Node a left right)
+ | x == a = True
+ | x < a = treeElem x left
+ | x > a = treeElem x right

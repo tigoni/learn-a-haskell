@@ -1,4 +1,4 @@
-module StartTypeSystem where
+module TypesAndTypeclasses where
 
 {-
  - Haskell type system:

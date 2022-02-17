@@ -1,4 +1,5 @@
 {-# OPTIONS_GHC -Wno-incomplete-patterns #-}
+{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 --type synonyms: same as adding alias to a type for easier readability and documentation
 type String' = [Char]
 
@@ -90,3 +91,57 @@ treeElem x (Node a left right)
 
 
 -- typeclasses 102
+-- making custom typeclasses
+
+class Eq' a where
+    (<==>) :: a -> a -> Bool
+    (</=>) :: a -> a -> Bool 
+    x <==> y =  not (x </=> y)
+    x </=> y =  not (x <==> y)
+
+-- using the typeclass on a type
+data TrafficLight = Red | Green | Yellow
+
+instance Eq' TrafficLight where
+    Red <==> Red = True 
+    Green <==> Green = True 
+    Yellow <==> Yellow = True 
+    _ <==> _ = False 
+
+    --no need to implement the (/=) function since (==) was defined interms of (/=) and vide-versa
+x = Red
+y = Green
+sameType = x <==> y 
+
+-- show can also be defined in custom (although the default prints the values names too)
+instance Show TrafficLight where
+    show Red = "R"
+    show Green = "G"
+    show Yellow = "Y"
+
+color = show y 
+
+
+--Yes-no typeclass: creating a typeclass similar to javascripts truthy and false expression values
+class YesNo a where
+    yesno :: a -> Bool 
+
+
+instance YesNo Int where
+    yesno 0 = False 
+    yesno _ = True
+
+value = yesno (3 :: Int) --True
+value2 = yesno (0 :: Int) --False
+
+
+instance YesNo [a] where
+    yesno [] = False
+    yesno _ = True
+
+instance YesNo (Maybe a) where
+    yesno (Just _) = True
+    yesno Nothing = False 
+
+
+

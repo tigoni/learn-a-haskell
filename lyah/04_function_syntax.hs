@@ -161,10 +161,14 @@ direction a
     | otherwise = "Invalid!"
 
  
+-- a non-sensical function just to show how guards work!
 coinPredict :: (RealFloat a) => a -> String
 coinPredict a
-    | result > 200 = "Great future!"
-    | result < 199 && result > 99  = "Maybe, maybe not!"
-    | result < 99  && result >= 10  = "Likely to tank soon!"
+    | result > low = "Great future!"
+    | result < low && result > mid  = "Maybe, maybe not!"
+    | result >= high = "Likely to tank soon!"
     | otherwise = "Cannot predict"
     where result = a / 1000
+          low = 200
+          mid = 150
+          high = 50

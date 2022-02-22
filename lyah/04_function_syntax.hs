@@ -121,13 +121,23 @@ coinCirculation'' marketCap price
 --Let it be: similar to where bindings. However they can be used to bind to variables anywhere and are expressions themselves. They do not span accross guard conditions.
 --Let it be bindings let us bind variables anywhere and are expressions themselves. Theay are local annd do not span accross guards
 -- function to get the surface area of a cylinder given its height and radius
+-- the name defined in the 'let' binding becomes accessible in the 'in' part of the expression
+-- let bindings are expressions and can therefore be used anywhere
+result :: Integer
+result = 10 * (let a = 50 in a * 2) 
+--result = 110
+
+--use let as a function
+square = [let square x = x * x in (square 3, square 5, square 9)]
+-- [(9,25,81)]
+
 cylinder :: (RealFloat a) => a -> a -> a
 cylinder r h =
   let sideArea = 2 * pi * r * h
       topArea = pi * r ^ 2
    in sideArea + 2 * topArea
 
-result = (let (a, b, c) = (1, 2, 3) in a + b + c) * 100
+results = (let (a, b, c) = (1, 2, 3) in a + b + c) * 100
 
 --binding several variables
 output = (let a = 100; b = 200; c = 300 in a * b * c, let foo = "Hey "; bar = "there!" in foo ++ bar)
@@ -162,6 +172,9 @@ direction a
 
  
 -- a non-sensical function just to show how guards work!
+-- where bindings are a syntactic construct that allows us to bind variables at the end
+-- of the function such that the whole function can see them
+
 coinPredict :: (RealFloat a) => a -> String
 coinPredict a
     | result > low = "Great future!"
@@ -172,3 +185,4 @@ coinPredict a
           low = 200
           mid = 150
           high = 50
+

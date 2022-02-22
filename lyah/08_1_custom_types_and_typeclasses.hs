@@ -118,4 +118,3 @@ userExists username password userlist = (username, password) `elem` userlist
 type UserList k v = [(k,v)]
 
 -- this will work when k and v are Int, String
-

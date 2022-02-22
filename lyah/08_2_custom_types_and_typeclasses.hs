@@ -1,3 +1,7 @@
+module CustomAndTypeClasses where
+
+import Prelude hiding (Just, Nothing)
+import Data.Either
 {-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 {-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 --type synonyms: same as adding alias to a type for easier readability and documentation
@@ -86,9 +90,6 @@ treeElem :: (Ord a ) => a -> Tree a -> Bool
 treeElem x EmptyTree = False 
 treeElem x (Node a left right)
  | x == a = True
- | x < a = treeElem x left
- | x > a = treeElem x right
-
 
 -- typeclasses 102
 -- making custom typeclasses
@@ -139,9 +140,38 @@ instance YesNo [a] where
     yesno [] = False
     yesno _ = True
 
-instance YesNo (Maybe a) where
+
+data CustomMaybe a = Just a | Nothing deriving Show
+instance YesNo (CustomMaybe a) where
     yesno (Just _) = True
     yesno Nothing = False 
 
+--Functor: A typeclass for things that can be mapped over
+-- The list type is a member of the Functor typeclass 
+-- A Functor class defines a function fmap' that takes a function that is applied on a 
+-- wrapped value and returns a wrapped value
+--Any type that can be thought of as a container can become a member of the functor typeclass
+class Functor' f where 
+    fmap' :: (a -> b) -> f a -> f b
 
+-- make CustomMaybe a member of Functor typeclass. So it has to implement the fmap' function
+instance Functor' CustomMaybe where
+    fmap' func (Just a ) = Just (func a )
+    fmap' func Nothing = Nothing 
 
+--adding Functor to a Tree type
+instance Functor' Tree where
+    fmap' f EmptyTree = EmptyTree
+    fmap' f (Node x leftsub rightsub) = Node (f x) (fmap' f leftsub) (fmap' f rightsub)
+
+--Either:  A type that represents values with two possiblities
+computedResult = Right 100 :: Either String Int
+computeError =  Left "Error Occured!":: Either String Int
+
+-- The fmap' from the Functor instance will apply the supplied function tot he values contained in a Right and
+-- ignore the Left values
+r = fmap (*3) computedResult
+--Right 300
+
+e = fmap (*3) computeError 
+--Left "Error Occured!"

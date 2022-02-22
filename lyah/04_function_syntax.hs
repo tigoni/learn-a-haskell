@@ -163,7 +163,8 @@ direction a
  
 coinPredict :: (RealFloat a) => a -> String
 coinPredict a
-    | a/1000 > 200 = "Great future!"
-    | a/1000 < 199 && a/1000 >=99  = "Maybe, maybe not!"
-    | a/1000 < 99  && a/1000 >= 10  = "Likely to tank soon!"
+    | result > 200 = "Great future!"
+    | result < 199 && result > 99  = "Maybe, maybe not!"
+    | result < 99  && result >= 10  = "Likely to tank soon!"
     | otherwise = "Cannot predict"
+    where result = a / 1000

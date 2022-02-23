@@ -1,3 +1,4 @@
+import Data.Char (toUpper)
 -- putStrLn takes a string and returns an I/O action that has the result type of ()
 -- this is an empty turple also called a unit.
 
@@ -9,9 +10,13 @@
 -- do can be used to group several IO actions together
 
 main = do
-    putStrLn "Hello what's your name"
-    name <- getLine
-    putStrLn ("Hey " ++ name ++ ", great to meet you")
+    putStrLn "Hello what's your first name?"
+    firstName <- getLine
+    putStrLn "What your second name?"
+    lastName <- getLine
+    let bigFirstName = map toUpper firstName
+        bigLastname = map toUpper lastName
+    putStrLn $ "Hey " ++ bigFirstName ++ " " ++ bigLastname ++ " how are you?"
 
 -- IO actions are only performed if they are given a name of main of they are inside a bigger IO action
 --block composed with an do block. A do block can be used to group together IO actions. 

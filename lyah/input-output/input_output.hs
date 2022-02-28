@@ -31,8 +31,10 @@ main = do
     line <- getLine
     if null line 
         then return ()
-        else do
+        else do --there has to be exactly one IO action after the else to the two lines are grouped using another 'do'
             putStrLn $ reverseWords line
             main
 reverseWords :: String -> String
 reverseWords = unwords . map reverse . words
+
+    

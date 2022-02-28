@@ -2,6 +2,15 @@
 import Control.Monad
 import Data.Char
 
+--program takes input and prints only shortLines
 main = do
     contents <- getContents
-    putStr (map toUpper contents)
+    putStr (shortLinesOnly contents)
+
+shortLinesOnly :: String -> String
+shortLinesOnly input = 
+    let allLines = lines input
+        shortLines = filter (\line -> length line < 10) allLines
+        result = unlines shortLines
+    in  result
+

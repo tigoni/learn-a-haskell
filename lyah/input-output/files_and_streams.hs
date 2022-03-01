@@ -18,12 +18,12 @@ import Data.Char
 --shorter alternative
 -- main = do interact $ unlines . filter ((<10) .length) . lines
 
---interact: takes a function of type String -> String -> IO ()
+--interact: takes a function of type String -> String and returns an IO action. That IO action takes some input and 
+--applies the function on it and prints out the function's results.
+
+--usefull SO answer on how interact works: https://stackoverflow.com/questions/16799755/haskell-interact-function
+main = interact (unlines .map countChars.lines)
 
 --declare function
 countChars :: String -> String
-countChars xs = "total chars are " ++ show (length xs)
-
-main = do
-        putStrLn "Enter a string to get the count"
-        interact countChars
+countChars xs = show $ length xs
